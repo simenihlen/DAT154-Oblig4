@@ -7,11 +7,13 @@ public partial class Roomdatum
 {
     public int Id { get; set; }
 
-    public string Quality { get; set; } = null!;
+    public int RoomNumber { get; set; }
 
-    public int Beds { get; set; }
+    public int NumberOfBeds { get; set; }
+
+    public int RoomSize { get; set; }
+
+    public string RoomQuality { get; set; } = null!;
 
     public virtual ICollection<Bookingdatum> Bookingdata { get; set; } = new List<Bookingdatum>();
-
-    public virtual Price QualityNavigation { get; set; } = null!;
 }

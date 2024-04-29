@@ -9,13 +9,11 @@ public partial class Bookingdatum
 
     public int Roomid { get; set; }
 
+    public int Userid { get; set; }
+
     public DateTime Startdate { get; set; }
 
     public DateTime Enddate { get; set; }
-
-    public int Guests { get; set; }
-
-    public int Userid { get; set; }
 
     public virtual Roomdatum Room { get; set; } = null!;
 

@@ -17,8 +17,6 @@ public partial class HotelDbContext : DbContext
 
     public virtual DbSet<Bookingdatum> Bookingdata { get; set; }
 
-    public virtual DbSet<Price> Prices { get; set; }
-
     public virtual DbSet<Roomdatum> Roomdata { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -31,7 +29,7 @@ public partial class HotelDbContext : DbContext
     {
         modelBuilder.Entity<Bookingdatum>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__bookingd__3213E83F8F7EC8C8");
+            entity.HasKey(e => e.Id).HasName("PK__bookingd__3213E83FE1434953");
 
             entity.ToTable("bookingdata");
 
@@ -39,7 +37,6 @@ public partial class HotelDbContext : DbContext
             entity.Property(e => e.Enddate)
                 .HasColumnType("datetime")
                 .HasColumnName("enddate");
-            entity.Property(e => e.Guests).HasColumnName("guests");
             entity.Property(e => e.Roomid).HasColumnName("roomid");
             entity.Property(e => e.Startdate)
                 .HasColumnType("datetime")
@@ -49,62 +46,45 @@ public partial class HotelDbContext : DbContext
             entity.HasOne(d => d.Room).WithMany(p => p.Bookingdata)
                 .HasForeignKey(d => d.Roomid)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__bookingda__roomi__5070F446");
+                .HasConstraintName("FK__bookingda__roomi__3A81B327");
 
             entity.HasOne(d => d.User).WithMany(p => p.Bookingdata)
                 .HasForeignKey(d => d.Userid)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__bookingda__useri__5165187F");
-        });
-
-        modelBuilder.Entity<Price>(entity =>
-        {
-            entity.HasKey(e => e.Quality).HasName("PK__prices__B9B86FE69F572606");
-
-            entity.ToTable("prices");
-
-            entity.Property(e => e.Quality)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("quality");
-            entity.Property(e => e.Price1).HasColumnName("price");
+                .HasConstraintName("FK__bookingda__useri__3B75D760");
         });
 
         modelBuilder.Entity<Roomdatum>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__roomdata__3213E83F1FCC92A6");
+            entity.HasKey(e => e.Id).HasName("PK__roomdata__3213E83F47DE0D46");
 
             entity.ToTable("roomdata");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Beds).HasColumnName("beds");
-            entity.Property(e => e.Quality)
+            entity.Property(e => e.NumberOfBeds).HasColumnName("number_of_beds");
+            entity.Property(e => e.RoomNumber).HasColumnName("room_number");
+            entity.Property(e => e.RoomQuality)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("quality");
-
-            entity.HasOne(d => d.QualityNavigation).WithMany(p => p.Roomdata)
-                .HasForeignKey(d => d.Quality)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__roomdata__qualit__4D94879B");
+                .HasColumnName("room_quality");
+            entity.Property(e => e.RoomSize).HasColumnName("room_size");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3213E83F6C63F40D");
+            entity.HasKey(e => e.Id).HasName("PK__users__3213E83FE20B8094");
 
             entity.ToTable("users");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Firstname)
+            entity.Property(e => e.Password)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("firstname");
-            entity.Property(e => e.Lastname)
+                .HasColumnName("password");
+            entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("lastname");
-            entity.Property(e => e.Phone).HasColumnName("phone");
+                .HasColumnName("username");
         });
 
         OnModelCreatingPartial(modelBuilder);
