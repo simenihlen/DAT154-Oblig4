@@ -16,7 +16,8 @@ DROP TABLE IF EXISTS bookingdata;
 CREATE TABLE users (
 	id int IDENTITY (1,1) NOT NULL PRIMARY KEY,
 	username VARCHAR(50) NOT NULL,
-	password VARCHAR(50) NOT NULL
+	password VARCHAR(50) NOT NULL,
+	role VARCHAR(50)
 );
 
 --Data for rooms
