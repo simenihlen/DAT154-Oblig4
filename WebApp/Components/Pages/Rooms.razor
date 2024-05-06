@@ -1,0 +1,38 @@
+﻿@page "/rooms"
+@using HotelLibrary.Models
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+<PageTitle>Rooms</PageTitle>
+
+<div class="col">
+    @if (rooms != null) {
+        <div class="card">
+            <div class="card-header">
+                Results
+            </div>
+            <div class="card-body">
+                @foreach (var a in rooms) {
+                    <div class="card">
+                        <div>
+                            <p>Room nr.: @a.RoomNumber</p>
+                            <p>Number of beds: @a.NumberOfBeds</p>
+                            <p>Size: @a.RoomSize</p>
+                            <p>Quality: @a.RoomQuality</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<Roomdatum> rooms;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dx = new HotelDbContext();
+        rooms = await dx.Roomdata.ToListAsync();
+    }
+}
