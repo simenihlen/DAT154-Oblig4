@@ -1,0 +1,16 @@
+﻿@page "/register"
+@using HotelLibrary.Models
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+<PageTitle>Register</PageTitle>
+
+@code {
+    private readonly HotelDbContext dx;
+
+    private async Task RegisterUser(User user) {
+        if(dx.Users.Any(u => u.Email == u.Email)) {
+            
+        }
+    }
+}

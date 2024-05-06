@@ -1,3 +1,6 @@
+using HotelLibrary.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Components;
 
 namespace WebApp {
@@ -8,6 +11,20 @@ namespace WebApp {
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            // https://www.youtube.com/watch?v=GKvEuA80FAE
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => {
+                    options.Cookie.Name = "auth_token";
+                    options.LoginPath = "/login";
+                    options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
+                    options.AccessDeniedPath = "/access-denied";
+                });
+            builder.Services.AddAuthorization();
+            builder.Services.AddCascadingAuthenticationState();
+            builder.Services.AddDbContext<HotelDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 
             var app = builder.Build();
 
@@ -22,6 +39,8 @@ namespace WebApp {
 
             app.UseStaticFiles();
             app.UseAntiforgery();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
