@@ -17,7 +17,9 @@ CREATE TABLE users (
 	id int IDENTITY (1,1) NOT NULL PRIMARY KEY,
 	username VARCHAR(50) NOT NULL,
 	password VARCHAR(50) NOT NULL,
-	role VARCHAR(50)
+	email VARCHAR(50) NOT NULL,
+	phone VARCHAR(50) NOT NULL,
+	role VARCHAR(50) DEFAULT 'guest'
 );
 
 --Data for rooms
