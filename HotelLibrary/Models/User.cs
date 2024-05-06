@@ -11,6 +11,10 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
+    public string Email { get; set; } = null!;
+
+    public string Phone { get; set; } = null!;
+
     public string? Role { get; set; }
 
     public virtual ICollection<Bookingdatum> Bookingdata { get; set; } = new List<Bookingdatum>();

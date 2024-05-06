@@ -51,7 +51,7 @@ public partial class HotelDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Bookingdata)
                 .HasForeignKey(d => d.Userid)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__bookingda__useri__3B75D760");
+                .HasConstraintName("FK__bookingda__useri__4AB81AF0");
         });
 
         modelBuilder.Entity<Roomdatum>(entity =>
@@ -72,18 +72,27 @@ public partial class HotelDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3213E83FE20B8094");
+            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3213E83FB381992E");
 
             entity.ToTable("users");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("email");
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("password");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("phone");
             entity.Property(e => e.Role)
                 .HasMaxLength(50)
                 .IsUnicode(false)
+                .HasDefaultValue("guest")
                 .HasColumnName("role");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
