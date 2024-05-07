@@ -83,6 +83,12 @@
         return local;
     }
 
+    // Jeg får: 
+    // SELECT TOP(1) [u].[id], [u].[email], [u].[password], [u].[phone], [u].[role], [u].[username]
+    // FROM[users] AS[u]
+    // WHERE 0 = 1
+    // Hvis "WHERE 1 = 1" så skal riktig bruker komme ut, men får "WHERE 0 = 1"
+
     private async Task bookedRoom() {
         try {
             var room = await getRoom();
@@ -91,7 +97,8 @@
                     Roomid = room.Id,
                     Userid = user.Id,
                     Startdate = startdate,
-                    Enddate = enddate
+                    Enddate = enddate,
+                    AntallPersoner = antall
             };
             dx.Bookingdata.Add(booking);
             await dx.SaveChangesAsync();
