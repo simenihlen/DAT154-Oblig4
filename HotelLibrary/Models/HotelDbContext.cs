@@ -34,6 +34,10 @@ public partial class HotelDbContext : DbContext
             entity.ToTable("bookingdata");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AntallPersoner)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("antallPersoner");
             entity.Property(e => e.Enddate)
                 .HasColumnType("datetime")
                 .HasColumnName("enddate");

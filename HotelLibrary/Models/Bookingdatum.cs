@@ -15,6 +15,8 @@ public partial class Bookingdatum
 
     public DateTime Enddate { get; set; }
 
+    public string AntallPersoner { get; set; } = null!;
+
     public virtual Roomdatum Room { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
