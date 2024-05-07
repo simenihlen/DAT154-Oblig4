@@ -1,5 +1,41 @@
 ﻿@page "/booking"
+@using HotelLibrary.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@attribute [Authorize(Roles = "admin, guest")]
+
+<PageTitle>Booking</PageTitle>
+
+<h1>Book room</h1>
+
+<h1>Her kan du booke room</h1>
+<label>
+    Kvalitet:
+    <select @bind="valgRomKval">
+        @foreach(var vk in roomQuality) {
+            <option value="@vk.RoomQuality">@vk.RoomQuality</option>
+        }
+    </select>
+</label><br/>
+<lable>Start dato: <input type="date" @bind="startdate"/></lable><br />
+<lable>Slutt dato: <input type="date" @bind="enddate"/></lable><br />
+<label>Antall personer: <input type="number" @bind="antall"/></label><br />
+
+<button @onclick="bookedRoom">Book rommet</button>
 
 @code {
+    private string? valgRomKval;
+    private List<Roomdatum> roomQuality = [];
+    private DateTime startdate = DateTime.Now;
+    private DateTime enddate = DateTime.Now.AddDays(1);
+    private int antall = 1;
 
+    protected override async Task OnInitializedAsync() {
+        var dx = new HotelDbContext();
+        roomQuality = await dx.Roomdata.ToListAsync();
+    }
+
+    private async Task bookedRoom() {
+        
+    }
 }
