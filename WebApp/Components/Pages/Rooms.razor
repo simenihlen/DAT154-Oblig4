@@ -2,6 +2,7 @@
 @using HotelLibrary.Models
 @using Microsoft.EntityFrameworkCore
 @rendermode InteractiveServer
+@inject HotelDbContext dx
 
 <PageTitle>Rooms</PageTitle>
 
@@ -32,7 +33,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var dx = new HotelDbContext();
         rooms = await dx.Roomdata.ToListAsync();
     }
 }

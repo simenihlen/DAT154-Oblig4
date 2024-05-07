@@ -2,7 +2,10 @@
 @using HotelLibrary.Models
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
+@using System.Security.Claims
 @attribute [Authorize(Roles = "admin, guest")]
+@inject HotelDbContext dx
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Booking</PageTitle>
 
@@ -23,19 +26,78 @@
 
 <button @onclick="bookedRoom">Book rommet</button>
 
+@if (booked) {
+    <h2>Roomet er booket</h2>
+}
+
 @code {
     private string? valgRomKval;
     private List<Roomdatum> roomQuality = [];
     private DateTime startdate = DateTime.Now;
     private DateTime enddate = DateTime.Now.AddDays(1);
     private int antall = 1;
+    private User? user;
+    private bool booked;
 
     protected override async Task OnInitializedAsync() {
         var dx = new HotelDbContext();
         roomQuality = await dx.Roomdata.ToListAsync();
+        user = await findUser();
+    }
+
+    private async Task<Roomdatum> getRoom() {
+        var dx = new HotelDbContext();
+        try {
+            var room = new Roomdatum {
+                RoomQuality = valgRomKval,
+                NumberOfBeds = antall
+            };
+            Console.WriteLine("Rom med " + room.RoomQuality + " kvalitet og " + room.NumberOfBeds + " antall senger.");
+            dx.Roomdata.Add(room);
+            await dx.SaveChangesAsync();
+            return room;
+        } catch(Exception e) {
+
+        }
+        return null;
+    }
+
+    private async Task<string> getUserId() {
+        var asp = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = asp.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            return user.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+        return null;
+    }
+
+    private async Task<User> findUser() {
+        User local = null;
+        try {
+            var userId = await getUserId();
+            local = await dx.Users.FirstOrDefaultAsync(u => u.Username == userId);
+        } catch (Exception e) {
+
+        }
+        return local;
     }
 
     private async Task bookedRoom() {
-        
+        try {
+            var room = await getRoom();
+
+            var booking = new Bookingdatum {
+                Roomid = room.Id,
+                Userid = user.Id,
+                Startdate = startdate,
+                Enddate = enddate
+            };
+            dx.Bookingdata.Add(booking);
+            await dx.SaveChangesAsync();
+            booked = true;
+        } catch (Exception e) {
+            
+        }
     }
 }
