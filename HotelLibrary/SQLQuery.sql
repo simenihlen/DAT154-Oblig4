@@ -38,7 +38,7 @@ CREATE TABLE bookingdata (
 	userid int NOT NULL,
 	startdate DATETIME NOT NULL,
 	enddate DATETIME NOT NULL,
-	antallPersoner VARCHAR (50) NOT NULL,
+	antallPersoner int NOT NULL,
 	FOREIGN KEY (roomid) REFERENCES roomdata (id) ON DELETE NO ACTION ON UPDATE CASCADE,
 	FOREIGN KEY (userid) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE CASCADE
 );
