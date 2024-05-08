@@ -62,6 +62,15 @@
         return null;
     }
 
+    // private async Task<string> getUser() {
+    //     var asp = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //     var user = asp.User;
+    //     if (user.Identity.IsAuthenticated) {
+    //         return user.Identity.Name;
+    //     }
+    //     return null;
+    // }
+
     private async Task<string> getUserId() {
         var asp = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = asp.User;
