@@ -64,7 +64,7 @@ namespace DesktopApp {
             using (var context = new HotelDbContext()) {
                 var username = usernameTextBox.Text;
                 var roomNumber = int.Parse(roomNumberTextBox.Text);
-                var numberOfPeople = numberOfPeopleTextBox.Text;
+                var numberOfPeople = int.Parse(numberOfPeopleTextBox.Text);
                 var checkIn = (DateTime)checkInDatePicker.SelectedDate;
                 var checkOut = (DateTime)checkOutDatePicker.SelectedDate;
 
@@ -88,6 +88,7 @@ namespace DesktopApp {
                     Userid = userId,
                     Startdate = checkIn,
                     Enddate = checkOut,
+                    AntallPersoner = numberOfPeople
                 };
                 context.Bookingdata.Add(newBooking);
                 context.SaveChanges();
