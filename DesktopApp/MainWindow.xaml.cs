@@ -59,5 +59,40 @@ namespace DesktopApp {
             }).ToList();
             roomList.ItemsSource = filteredList;
         }
+
+        private void addReservationButton_Click(Object sender, RoutedEventArgs e) {
+            using (var context = new HotelDbContext()) {
+                var username = usernameTextBox.Text;
+                var roomNumber = int.Parse(roomNumberTextBox.Text);
+                var numberOfPeople = numberOfPeopleTextBox.Text;
+                var checkIn = (DateTime)checkInDatePicker.SelectedDate;
+                var checkOut = (DateTime)checkOutDatePicker.SelectedDate;
+
+                var userId = 0;
+
+                var existing = context.Users.FirstOrDefault(u => u.Username == username);
+
+                if (existing != null) {
+                    userId = existing.Id;
+                } else {
+                    addReservationResult.Text = "Bruker eksisterer ikke";
+                }
+
+                var room = context.Roomdata.FirstOrDefault(r => r.RoomNumber == roomNumber);
+                if (room == null) {
+                    addReservationResult.Text = "Rom ikke funnet";
+                    return;
+                }
+                var newBooking = new Bookingdatum {
+                    Roomid = room.Id,
+                    Userid = userId,
+                    Startdate = checkIn,
+                    Enddate = checkOut,
+                };
+                context.Bookingdata.Add(newBooking);
+                context.SaveChanges();
+                addReservationResult.Text = "Reservasjon har blitt lagt til";
+            }
+        }
     }
 }

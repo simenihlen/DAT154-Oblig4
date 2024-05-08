@@ -32,7 +32,34 @@
                     </ListView>
                 </StackPanel>
             </TabItem>
-            
+
+            <TabItem Header="New Reservation">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Username:" Width="125" VerticalAlignment="Center"/>
+                        <TextBox x:Name="usernameTextBox" Width="200"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Room Number:" Width="125" VerticalAlignment="Center"/>
+                        <TextBox x:Name="roomNumberTextBox" Width="200"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Number of people:" Width="125" VerticalAlignment="Center"/>
+                        <TextBox x:Name="numberOfPeopleTextBox" Width="200"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Check In Date:" Width="125" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="checkInDatePicker" Width="200"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Check Out Date:" Width="125" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="checkOutDatePicker" Width="200"/>
+                    </StackPanel>
+                    <Button x:Name="addReservationButton" Content="Add Reservation" Click="addReservationButton_Click" Width="150" HorizontalAlignment="Left" Margin="10 5 0 0"/>
+                    <TextBlock x:Name="addReservationResult" Margin="0 10 0 0"/>
+                </StackPanel>
+            </TabItem>
+
         </TabControl>
     </Grid>
 </Window>
