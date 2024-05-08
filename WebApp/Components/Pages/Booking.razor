@@ -40,10 +40,27 @@
     private bool booked;
 
     protected override async Task OnInitializedAsync() {
-        var dx = new HotelDbContext();
         roomQuality = await dx.Roomdata.ToListAsync();
         user = await findUser();
     }
+
+    // private async Task<Roomdatum> getRoom() {
+    //     using (var dx = new HotelDbContext()) {
+    //         try {
+    //             var room = await dx.Roomdata.FirstOrDefaultAsync(r => r.RoomQuality == valgRomKval);
+    //             if (room != null) {
+    //                 Console.WriteLine("Fant et rom med kvalitet " + room.RoomQuality);
+    //                 return room;
+    //             } else {
+    //                 Console.WriteLine("Fant ikke et rom med med " + valgRomKval);
+    //                 return null;
+    //             }
+    //         } catch(Exception e) {
+    //             Console.WriteLine("Error: " + e.Message);
+    //             return null;
+    //         }
+    //     }
+    // }
 
     private async Task<Roomdatum> getRoom() {
         var dx = new HotelDbContext();
@@ -102,18 +119,18 @@
         try {
             var room = await getRoom();
 
-            var booking = new Bookingdatum {
+            var newBooking = new Bookingdatum {
                     Roomid = room.Id,
                     Userid = user.Id,
                     Startdate = startdate,
                     Enddate = enddate,
                     AntallPersoner = antall
             };
-            dx.Bookingdata.Add(booking);
-            await dx.SaveChangesAsync();
+            dx.Bookingdata.Add(newBooking);
+            dx.SaveChanges();
             booked = true;
         } catch (Exception e) {
-            
+            Console.WriteLine("Error: " + e.Message);
         }
     }
 }
